@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<div class="my-5" style="min-height: 80vh;">
+    <div class="my-5">
+        <h2>Your Cart</h2>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" width="15%">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col" class="text-center">Price</th>
+                <th scope="col">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ cart.item.name }}</td>
+                <td class="d-flex align-items-center">
+                    <a href="{% url 'App_Order:decrease' pk=cart.item.pk %}" class="mr-2"><span
+                            class="badge badge-light"><i class="fas fa-minus"></i></span></a>
+                    <span>{{ cart.quantity }}</span>
+                    <a href="{% url 'App_Order:increase' pk=cart.item.pk %}" class="ml-2"><span
+                            class="badge badge-light"><i class="fas fa-plus"></i></span></a>
+                </td>
+                <td class="px-0 text-center" > <span>&#8377;</span> <span>{{ cart.get_total }}</span> </td>
+                <td><a href="{% url 'App_Order:remove' pk=cart.item.pk %}"><i class="fas fa-trash-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th scope="row"></th>
+                <td colspan="2">Total</td>
+                <td class="text-center" style="display: flex; gap: 4px; "> <span>&#8377; </span><span>{{ order.get_totals|floatformat:2 }}</span> </td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td colspan="4" class="text-right">
+                    <a href="{% url 'App_Shop:home' %}" class="btn btn-warning mr-2">Continue Shopping</a>
+                    <a href="{% url 'App_Payment:checkout' %}" class="btn btn-success">Checkout</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

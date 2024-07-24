@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<style>
+    .price-old{
+        color: #999;
+        text-decoration: line-through;
+    }
+    .add-to-cart-btn {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        color: #5f98d0;
+        border-color: #5f98d0;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #5f98d0;
+        color: white;
+    }
+
+  
+</style>
+<div class="container" >
+    <div class="row" >
+        <div class="col-md-5">
+            <div class="gallery-wrap">
+                <div class="img-big-wrap">
+                    <a href="#"><img src="/media/{{ object.mainimage }}" class="img-fluid" alt="{{ object.name }}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" style="display: flex; flex-direction: column; justify-content: space-around; ">
+            <div class="product-details">
+                <h3 class="title mb-3" style="color: #505050;">{{ object.name }}</h3>
+                <p class="price-detail-wrap">
+
+                    <span class="price h3 " style="color: black;">
+                        <span class="currency" ><span style="font-size: large;">INR</span> &#8377;</span><span class="num">{{ object.price }}</span>
+                        <span class="price-old" style="font-size: large;">&#8377; {{product.old_price}}</span>
+                    </span>
+                </p>
+                <a href="{% url 'App_Order:add' pk=object.pk %}"
+                        class="btn btn-lg text-uppercase add-to-cart-btn"><i class="fas fa-shopping-cart"></i>
+                        <span>Add to Cart</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4>Description</h4>
+            <p>{{ object.detail_text|linebreaks }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
